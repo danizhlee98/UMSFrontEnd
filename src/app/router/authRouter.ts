@@ -1,0 +1,22 @@
+import api from "../axios/api";
+import { LoginRequest, LoginResponse } from "../schema/userSchema";
+
+
+export const authRouter = {
+    login: async (data: LoginRequest): Promise<LoginResponse> => {
+      try{
+        console.log("Jadi tak");
+        const response = await api.post<LoginResponse>("/Auth/login", data);
+        console.log("response login:",response);
+        return response.data;
+      }
+      catch (error){
+        console.log("Error Login:",error);
+        throw error;
+      }
+    },
+    logout: async (): Promise<void> => {
+      await api.post("/logout");
+      localStorage.removeItem("token");
+    },
+  };
