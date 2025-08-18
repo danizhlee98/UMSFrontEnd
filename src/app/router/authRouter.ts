@@ -5,8 +5,7 @@ import { LoginRequest, LoginResponse } from "../schema/userSchema";
 export const authRouter = {
     login: async (data: LoginRequest): Promise<LoginResponse> => {
       try{
-        console.log("Jadi tak");
-        const response = await api.post<LoginResponse>("/Auth/login", data);
+        const response = await api.post("/Auth/login", data);
         console.log("response login:",response);
         return response.data;
       }
