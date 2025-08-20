@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import clsx from "clsx";
-import { ToastType } from "../type/toastType";
+import { ToastType } from "../../type/toastType";
 
 interface ToastProps {
   message: string;

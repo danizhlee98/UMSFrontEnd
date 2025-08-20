@@ -1,8 +1,8 @@
 // toastProvider.tsx
 "use client";
 import { createContext, useContext, useState, ReactNode } from "react";
-import { Toast } from "../components/toast";
-import { ToastType } from "../type/toastType";
+import { Toast } from "./toast";
+import { ToastType } from "@/app/type/toastType";
 
 type ToastMessage = {
   id: number;
