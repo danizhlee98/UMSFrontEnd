@@ -5,7 +5,7 @@ export const userRouter = {
   get: async (email: string): Promise<UserRequest> => {
     try {
       const response = await api.get<UserRequest>(
-        "/User/Profile?email=" + email
+        "/User/Edit?email=" + email
       );
       console.log("response login:", response);
       return response.data;
@@ -23,6 +23,18 @@ export const userRouter = {
       return response.data;
     } catch (error) {
       console.log("Error edit:", error);
+      throw error;
+    }
+  },
+  createUser: async (user : UserRequest): Promise<UserResponse> => {
+    try {
+      const response = await api.post<UserResponse>(
+        "/User/Create",user
+      );
+      console.log("response create:", response);
+      return response.data;
+    } catch (error) {
+      console.log("Error create:", error);
       throw error;
     }
   },

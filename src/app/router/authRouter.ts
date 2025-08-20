@@ -1,9 +1,9 @@
 import api from "../axios/api";
-import { LoginRequest, LoginResponse } from "../schema/userSchema";
+import { LoginRequest, LoginResponse, UserResponse } from "../schema/userSchema";
 
 
 export const authRouter = {
-    login: async (data: LoginRequest): Promise<LoginResponse> => {
+    login: async (data: LoginRequest): Promise<UserResponse> => {
       try{
         const response = await api.post("/Auth/login", data);
         console.log("response login:",response);
