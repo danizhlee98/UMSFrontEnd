@@ -2,7 +2,9 @@ import api from "../axios/api";
 import { LoginRequest, LoginResponse, UserRequest, UserResponse } from "../schema/userSchema";
 
 export const userRouter = {
+  
   get: async (email: string): Promise<UserRequest> => {
+    // Get a user by their email
     try {
       const response = await api.get<UserRequest>(
         "/User/Edit?email=" + email
@@ -14,6 +16,7 @@ export const userRouter = {
       throw error;
     }
   },
+  // update user
   updateUser: async (user : UserRequest): Promise<UserResponse> => {
     try {
       const response = await api.put<UserResponse>(
@@ -26,6 +29,7 @@ export const userRouter = {
       throw error;
     }
   },
+  //for Creating a User
   createUser: async (user : UserRequest): Promise<UserResponse> => {
     try {
       const response = await api.post<UserResponse>(
@@ -38,6 +42,7 @@ export const userRouter = {
       throw error;
     }
   },
+  //For Upload image
   uploadImage: async (file: File, firstName: string): Promise<UserRequest> => {
     try {
       const formData = new FormData();
@@ -57,6 +62,7 @@ export const userRouter = {
       throw error;
     }
   },
+  //For Getting Image by PathUrl
   getImage: async (pathUrl: string): Promise<{url:string}> => {
     try {
       const formData = new FormData();
