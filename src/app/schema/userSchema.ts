@@ -12,7 +12,9 @@ export const loginResponse = z.object({
 
 export const userResponseSchema = z.object({
   message: z.string(),
-  success: z.boolean()
+  success: z.boolean(),
+  accessToken: z.string(),
+  accessTokenExpire: z.date()
 })
 
 export const userRequestSchema = z.object({
