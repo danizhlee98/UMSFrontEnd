@@ -6,9 +6,10 @@ import { userRouter } from "../../router/userRouter";
 import { UserRequest } from "../../schema/userSchema";
 import { Loader2 } from "lucide-react";
 import api from "../../axios/api";
-import { useToast } from "../toastComponent";
+import { useToast } from "../toast/toastComponent";
 import { profileType } from "../../type/profileType";
 import { useRouter } from "next/navigation";
+import Button from "../button/button";
 
 interface ProfileInterface {
   email?: string;
@@ -21,6 +22,8 @@ export default function ProfileForm({ email, type }: ProfileInterface) {
   const [fileName, setFileName] = useState<string | undefined>(undefined);
   const [imageFile, setImageFile] = useState<File>();
 
+  const [showGoToLoginButton, setShowGoToLoginButton] =
+    useState<boolean>(false);
   const [isFetchingImage, setIsFetchingImage] = useState<boolean>(false);
   const [errorGetImage, setErrorGetImage] = useState<string | null>(null);
 
@@ -98,7 +101,7 @@ export default function ProfileForm({ email, type }: ProfileInterface) {
   });
 
   const handleLogout = () => {
-    router.push("/")
+    router.push("/");
   };
 
   const handleSave = async () => {
@@ -111,7 +114,7 @@ export default function ProfileForm({ email, type }: ProfileInterface) {
       const result = userRouter.uploadImage(imageFile, profile.email);
     }
 
-    if(fileName){
+    if (fileName) {
       setProfile(updatedProfile);
     }
 
@@ -121,12 +124,16 @@ export default function ProfileForm({ email, type }: ProfileInterface) {
 
       const { message, success } = await action(updatedProfile);
 
+      console.log("message:", message, "success:", success);
+
+      if (success) {
+        setShowGoToLoginButton(true);
+      }
+
       showToast({
         message,
         type: success ? "success" : "error",
       });
-
-      router.push(`/edit?email=${profile.email}`);
     } catch (err: any) {
       showToast({
         message: err.message || "Something went wrong",
@@ -134,6 +141,8 @@ export default function ProfileForm({ email, type }: ProfileInterface) {
       });
     }
   };
+
+  console.log("button:", showGoToLoginButton);
 
   return (
     <>
@@ -236,19 +245,30 @@ export default function ProfileForm({ email, type }: ProfileInterface) {
 
           <div className="flex">
             <div className="ml-auto">
-              <button
-                onClick={handleSave}
-                className="w-35 bg-green-600 text-white py-2 rounded-md hover:bg-green-700 shadow-md mr-3"
-              >
-                Save Changes
-              </button>
+              {!showGoToLoginButton && (
+                <Button
+                  onClick={handleSave}
+                  className="w-35 bg-green-600 text-white py-2 rounded-md hover:bg-green-700 shadow-md mr-3"
+                >
+                  Save Changes
+                </Button>
+              )}
+
               {type == "update" && (
-                <button
+                <Button
                   onClick={handleLogout}
                   className="w-35 bg-red-600 text-white py-2 rounded-md hover:bg-red-700 shadow-md"
                 >
                   Logout
-                </button>
+                </Button>
+              )}
+              {showGoToLoginButton && (
+                <Button
+                  onClick={handleLogout}
+                  className="w-35 bg-blue-500 text-white py-2 rounded-md hover:bg-red-700 shadow-md"
+                >
+                  Go to login page
+                </Button>
               )}
             </div>
           </div>
